@@ -41,16 +41,22 @@ if __name__ == '__main__':
 
     # TODO: Set your base server url according to how you are running your server.
     base_server_url = "https://flaskserver.jasonavina.repl.co"
-    intended_path = "/research"
-    full_server_url = base_server_url + intended_path
+    intended_path = "/lastclose"
+    #querystring = "?ticker=msft"
+    full_server_url = base_server_url + intended_path #+ querystring
 
     # TODO: Create the data you want to send.
-    sample_data_to_send = {'abc': [1, 2, 3]}  # Any combination of JSON-compatible Python objects: int, float, str, list, dict, True/False/None
+    
+    sample_data_to_send = {"data": {'snp':'up', 'qqq':'down'}}  # Any combination of JSON-compatible Python objects: int, float, str, list, dict, True/False/None
 
     result = Client.send_json(full_server_url, sample_data_to_send)
+  
     if result is Client.FAILED_REQUEST:
         print(f"REQUEST FAILED for {sample_data_to_send=}")
     else:
         print(f"REQUEST SUCCEEDED:")
-        print(result)
-
+        if type(result) is dict:
+            pretty = json.dumps(result, indent=4)
+            print(pretty)
+        else:
+            print(result)
